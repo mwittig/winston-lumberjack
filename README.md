@@ -1,2 +1,3 @@
 # winston-lumberjack
-A winston transport to send log message to a logstash server using the lumberjack protocol
+
+A logstash transport for winston using the lumberjack protocol
