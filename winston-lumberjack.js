@@ -18,17 +18,23 @@ var net = require('net'),
         options = options || {};
 
         this.name                = 'lumberjack';
-        this.localhost           = options.localhost || os.hostname();
+        this.localhost           = options.localhost || os.hostname();
         this.node_name           = options.node_name || process.title;
         this.pid                 = options.pid || process.pid;
         this.serverType          = options.serverType || "Unknown";
         this.label               = options.label || 'Unknown';
         this.timestamp           = options.timestamp || false;
 
-        this.tlsOptions          = options.tlsOptions || {};
-        this.clientOptions       = options.clientOptions || {};
+        this.connectionOptions  = {
+            host: options.host || "localhost",
+            port: options.port || 5000,
+            ca: [fs.readFileSync(options.sslCrt, {encoding: 'utf-8'})]
+        };
+        this.clientOptions       = {
+            maxQueueSize: options.maxQueueSize || 500
+        };
 
-        this.client = lumberjackProtocol.client(this.tlsOptions, this.clientOptions);
+        this.client = lumberjackProtocol.client(this.connectionOptions, this.clientOptions);
     };
 
 //
@@ -64,12 +70,12 @@ function extractJSON(str) {
     return null;
 }
 
-Lumberjack.prototype.log = function (level, msg, meta, callback) {
+Lumberjack.prototype.log = function (level, msg, _meta, callback) {
     var self = this,
         meta = {},
         log_entry;
 
-    meta.details = winston.clone(_meta || {});
+    meta.details = winston.clone(meta || {});
     if (self.silent) {
         return callback(null, true);
     }
@@ -100,6 +106,13 @@ Lumberjack.prototype.log = function (level, msg, meta, callback) {
     });
 
     self.client.writeDataFrame({
-        "line": stringify(data)
+        line: log_entry,
+        type: "winston-lumberjack",
+        level: level,
+        application: self.node_name,
+        serverName: self.localhost,
+        serverType: self.serverType,
+        pid: self.pid,
+        module: self.label
     });
 };
