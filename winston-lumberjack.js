@@ -19,7 +19,7 @@ var net = require('net'),
 
         this.name                = 'lumberjack';
         this.localhost           = options.localhost || os.hostname();
-        this.node_name           = options.node_name || process.title;
+        this.application         = options.application || process.title;
         this.pid                 = options.pid || process.pid;
         this.serverType          = options.serverType || "Unknown";
         this.label               = options.label || 'Unknown';
@@ -81,7 +81,7 @@ Lumberjack.prototype.log = function (level, msg, _meta, callback) {
     }
 
     // add meta fields
-    meta.application = self.node_name;
+    meta.application = self.application;
     meta.serverName = self.localhost;
     meta.serverType = self.serverType;
     meta.pid = self.pid;
@@ -109,7 +109,7 @@ Lumberjack.prototype.log = function (level, msg, _meta, callback) {
         line: log_entry,
         type: "winston-lumberjack",
         level: level,
-        application: self.node_name,
+        application: self.application,
         serverName: self.localhost,
         serverType: self.serverType,
         pid: self.pid,
