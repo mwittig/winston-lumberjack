@@ -3,7 +3,8 @@
   "description": "A logstash transport for winston using the lumberjack protocol",
   "version": "0.0.1",
   "author": {
-    "name": "Marcus Wittig"
+    "name": "Marcus Wittig",
+    "url": "https://github.com/mwittig/winston-lumberjack"
   },
   "license": "MIT",
   "main": "./winston-lumberjack",
@@ -20,5 +21,17 @@
   },
   "devDependencies": {
     "winston": "^0.9.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mwittig/winston-lumberjack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mwittig/winston-lumberjack/issues"
+  },
+  "files": [
+    "README.md",
+    "winston-lumberjack.js",
+    "LICENSE"
+  ]
 }
