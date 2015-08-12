@@ -6,7 +6,7 @@
     "name": "Marcus Wittig"
   },
   "license": "MIT",
-  "main": "./lib/winston-lumberjack",
+  "main": "./winston-lumberjack",
   "keywords": [
     "logging",
     "sysadmin",
