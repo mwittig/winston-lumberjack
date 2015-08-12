@@ -11,30 +11,31 @@ var net = require('net'),
     winston = require('winston'),
     common = require('winston/lib/winston/common'),
     _ = require('lodash'),
-    stringify = require('json-stringify-safe'),
     lumberjackProtocol = require('lumberjack-protocol'),
     Lumberjack = exports.Lumberjack = function (options) {
         winston.Transport.call(this, options);
         options = options || {};
 
-        this.name                = 'lumberjack';
-        this.localhost           = options.localhost || os.hostname();
-        this.application         = options.application || process.title;
-        this.pid                 = options.pid || process.pid;
-        this.serverType          = options.serverType || "Unknown";
-        this.label               = options.label || 'Unknown';
-        this.timestamp           = options.timestamp || false;
+        this.name = 'lumberjack';
+        this.localhost = options.localhost || os.hostname();
+        this.application = options.application || process.title;
+        this.pid = options.pid || process.pid;
+        this.serverType = options.serverType || "Unknown";
+        this.label = options.label || 'Unknown';
+        this.timestamp = options.timestamp || false;
+        this.serverAddress = _.assign(
+            {
+                host: "localhost",
+                port: 5000
+            },
+            options.serverAddress || {}
+        );
+        if (!_.isUndefined(options.sslCrt) && _.isUndefined(this.serverAddress.ca)) {
+            this.serverAddress.ca = [fs.readFileSync(options.sslCrt, {encoding: 'utf-8'})]
+        }
+        this.clientOptions = options.clientOptions;
 
-        this.connectionOptions  = {
-            host: options.host || "localhost",
-            port: options.port || 5000,
-            ca: [fs.readFileSync(options.sslCrt, {encoding: 'utf-8'})]
-        };
-        this.clientOptions       = {
-            maxQueueSize: options.maxQueueSize || 500
-        };
-
-        this.client = lumberjackProtocol.client(this.connectionOptions, this.clientOptions);
+        this.client = lumberjackProtocol.client(this.serverAddress, this.clientOptions);
     };
 
 //
@@ -62,11 +63,11 @@ function extractJSON(str) {
             try {
                 return res = JSON.parse(candidate);
             }
-            catch(e) {}
+            catch (e) {}
             lastClose = str.substr(0, lastClose).lastIndexOf('}');
-        } while(lastClose > firstOpen);
+        } while (lastClose > firstOpen);
         firstOpen = str.indexOf('{', firstOpen + 1);
-    } while(firstOpen != -1);
+    } while (firstOpen != -1);
     return null;
 }
 
@@ -75,10 +76,10 @@ Lumberjack.prototype.log = function (level, msg, _meta, callback) {
         meta = {},
         log_entry;
 
-    meta.details = winston.clone(meta || {});
     if (self.silent) {
         return callback(null, true);
     }
+    meta.details = winston.clone(_meta || {});
 
     // add meta fields
     meta.application = self.application;
@@ -107,12 +108,6 @@ Lumberjack.prototype.log = function (level, msg, _meta, callback) {
 
     self.client.writeDataFrame({
         line: log_entry,
-        type: "winston-lumberjack",
-        level: level,
-        application: self.application,
-        serverName: self.localhost,
-        serverType: self.serverType,
-        pid: self.pid,
-        module: self.label
+        type: "winston-lumberjack"
     });
 };
