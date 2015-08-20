@@ -5,14 +5,32 @@ A logstash transport for winston based on
  lumberjack protocol implementation for Node.js. It allows for sending encrypted logs from your node.js app to 
  your logstash server instance.
 
-Configuration 
+## Usage 
 
-Besides the configuration g
+### Node
 
-* sslCert (optional)
+    var winston = require('winston');
+    // Simply requiring winston-lumberjack will assign winston.transports.Lumberjack
+    require('winston-lumberjack');
+    
+    winston.add(winston.transports.Lumberjack, {
+        "timestamp": true,
+        "level": "debug",
+        "serverAddress": {
+            "host": "localhost",
+            "port": 5000
+        },
+        "sslCrt": "./logstash-forwarder.crt"
+    });
+    
+    winston.log('debug', 'Now my debug messages are written to logstash!');
 
-Filename of the trusted CA certificate which has signed the logstash server certificate. If this is omitted several 
- well known "root" CAs will be used. These are used to authorize connections.
+### Lumberjack Configuration
+
+*   sslCert (optional)
+
+    Filename of the trusted CA certificate which has signed the logstash server certificate. If this is omitted several 
+    well known "root" CAs will be used. These are used to authorize connections.
  
 *  serverAddress
 
