@@ -61,9 +61,11 @@ function extractJSON(str) {
         do {
             candidate = str.substring(firstOpen, lastClose + 1);
             try {
-                return res = JSON.parse(candidate);
+                return JSON.parse(candidate);
             }
-            catch (e) {}
+            catch (e) {
+                // intentionally left blank
+            }
             lastClose = str.substr(0, lastClose).lastIndexOf('}');
         } while (lastClose > firstOpen);
         firstOpen = str.indexOf('{', firstOpen + 1);
