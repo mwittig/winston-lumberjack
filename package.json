@@ -1,7 +1,7 @@
 {
   "name": "winston-lumberjack",
   "description": "A logstash transport for winston using the lumberjack protocol",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": {
     "name": "Marcus Wittig",
     "url": "https://github.com/mwittig/winston-lumberjack"
