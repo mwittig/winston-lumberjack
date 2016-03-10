@@ -77,3 +77,9 @@ A logstash transport for winston based on
    
    * `options.reconnect` - time, in ms, to wait between reconnect attempts.  Defaults to 3 seconds.
 
+## License 
+
+Copyright (c) 2015-2016, Marcus Wittig
+All rights reserved.
+
+[MIT](https://github.com/mwittig/winston-lumberjack/blob/master/LICENSE)
