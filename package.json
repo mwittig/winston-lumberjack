@@ -16,7 +16,7 @@
     "logstash"
   ],
   "dependencies": {
-    "lodash": "^4.16.4",
+    "lodash": "^4.16.5",
     "lumberjack-protocol": "^1.0.4",
     "winston": "^2.2.0"
   },
