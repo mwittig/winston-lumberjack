@@ -16,9 +16,9 @@
     "logstash"
   ],
   "dependencies": {
-    "lodash": "^4.17.2",
-    "lumberjack-protocol": "^1.0.4",
-    "winston": "^2.3.0"
+    "lodash": "^4.17.5",
+    "lumberjack-protocol": "^1.0.7",
+    "winston": "^2.4.1"
   },
   "repository": {
     "type": "git",
