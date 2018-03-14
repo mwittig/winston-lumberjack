@@ -1,5 +1,7 @@
 # winston-lumberjack
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mwittig/winston-lumberjack.svg)](https://greenkeeper.io/)
+
 A logstash transport for winston based on 
  [node-lumberjack-protocol](https://github.com/benbria/node-lumberjack-protocol), a 
  lumberjack protocol implementation for Node.js. It allows for sending encrypted logs from your node.js app to 
