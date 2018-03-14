@@ -1,5 +1,6 @@
 # winston-lumberjack
 
+[![Build Status](https://travis-ci.org/mwittig/winston-lumberjack.svg?branch=master)](https://travis-ci.org/mwittig/winston-lumberjack)
 [![Greenkeeper badge](https://badges.greenkeeper.io/mwittig/winston-lumberjack.svg)](https://greenkeeper.io/)
 
 A logstash transport for winston based on 
@@ -81,7 +82,7 @@ A logstash transport for winston based on
 
 ## License 
 
-Copyright (c) 2015-2016, Marcus Wittig
+Copyright (c) 2015-2018, Marcus Wittig
 All rights reserved.
 
 [MIT](https://github.com/mwittig/winston-lumberjack/blob/master/LICENSE)
